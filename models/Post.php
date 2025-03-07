@@ -61,7 +61,7 @@
                             categories c ON p.category_id = c.id
                         WHERE
                             p.id = ?
-                        LIMIT 0,1';
+                        LIMIT 1';
             // Prepare statement
             $stmt = $this->conn->prepare($query);
 
@@ -84,13 +84,17 @@
         // Create Post
         public function create() {
             // Create query
-            $query = '  INSERT INTO ' .
-                            $this->table . '
-                        SET
-                            title = :title,
-                            body = :body,
-                            author = :author,
-                            category_id = :category_id';
+            $query = '  INSERT INTO
+                            ' . $this->table . ' (
+                            title,
+                            body,
+                            author,
+                            category_id)
+                        VALUES (
+                            :title,
+                            :body,
+                            :author,
+                            :category_id)';
             
                     // Prepare statement
             $stmt = $this->conn->prepare($query);
